@@ -13,3 +13,8 @@ jobs:
         run: | 
           node -v
           npm -v 
+      - name: python test
+        run: |
+         import platform
+         print(platform.resources())
+        shell: python
