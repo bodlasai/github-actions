@@ -1,0 +1,14 @@
+name: testing multiple
+
+on : [push]
+
+jobs:
+  run-shell-commands:
+     runs-on: windows-latest
+     steps:
+       - name: tesing power shell
+         run: Get-Location 
+       - name: shell
+         run: pwd
+         shell: bash 
+  
