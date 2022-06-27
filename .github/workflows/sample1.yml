@@ -6,9 +6,9 @@ on:
      bucketname:
        required: true
        type: string
-     foldername:
-       required: true
-       type: string
+#      foldername:
+#        required: true
+#        type: string
 jobs:
   sample_outputs:
     runs-on: ubuntu-latest
