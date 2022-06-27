@@ -10,6 +10,12 @@ on:
        required: true
        type: string
 jobs:
+  sample_outputs:
+    runs-on: ubuntu-latest
+    steps:
+     - uses: bodlasai/learning/.github/workflows/testing.yml@master
+     - name: print inputs
+       run: echo "${{inputs.bucketname}}"
   run-shell-commands:
     runs-on: ubuntu-latest
     steps:
@@ -24,12 +30,7 @@ jobs:
      - uses: actions/checkout@v2
      - name: print latest_commit
        run: echo ${{ github.sha }}
-  sample_outputs:
-    runs-on: ubuntu-latest
-    steps:
-     - uses: bodlasai/learning/.github/workflows/testing.yml@master
-     - name: print inputs
-       run: echo "${{inputs.bucketname}}"
+  
     
      
   
