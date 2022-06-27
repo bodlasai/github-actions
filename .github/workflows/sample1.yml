@@ -8,3 +8,11 @@ jobs:
     steps:
       - name: echo the sting
         run: echo "hello git actions"
+  check_date:
+    runs-on: ubuntu-latest
+    name: Check latest commit
+    outputs:
+      should_run: ${{ steps.should_run.outputs.should_run }}
+  
+  
+ 
