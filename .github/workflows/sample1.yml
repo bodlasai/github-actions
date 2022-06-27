@@ -14,8 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - uses: bodlasai/learning/.github/workflows/testing.yml@master
-     - name: print inputs
-       run: echo "${{inputs.bucketname}}"
+       with:
+         bucketname: ${{ inputs.bucketname }} 
+         run: "hello ${{inputs.bucketname}}"
   run-shell-commands:
     runs-on: ubuntu-latest
     steps:
