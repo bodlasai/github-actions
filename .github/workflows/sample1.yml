@@ -1,7 +1,7 @@
 name: "sai"
 
-on: [push]
-
+on:
+  workflow_call:
 jobs:
   run-shell-commands:
     runs-on: ubuntu-latest
