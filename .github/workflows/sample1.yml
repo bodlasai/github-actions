@@ -24,11 +24,7 @@ jobs:
      - uses: actions/checkout@v2
      - name: print latest_commit
        run: echo ${{ github.sha }}
-     - name: sample_test 
-       uses: bodlasai/learning/.github/workflows/testing.yml@master
-       with:
-        bucketname: ${{ inputs.bucketname }} 
-        run: "hello ${{inputs.bucketname}}"
+     
   
     
      
