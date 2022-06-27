@@ -23,7 +23,13 @@ jobs:
     steps:
      - uses: actions/checkout@v2
      - name: print latest_commit
-       run: echo ${{ github.sha }}
+       run: echo ${{ github.sha }}     
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/my-action
+        with:
+          bucketname: ${{ inputs.bucketname }} 
      
   
     
