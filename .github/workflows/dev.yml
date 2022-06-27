@@ -1,10 +1,6 @@
 name: CD Pipeline for DCS DB Feeds on PROD
 on:
   workflow_call:
-    inputs:
-      username:
-        required: true
-        type: string
     secrets:
       AWS_ACC_KEY:
         required: true
