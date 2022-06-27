@@ -1,0 +1,56 @@
+name: CD Pipeline for DCS DB Feeds on PROD
+on:
+  workflow_call:
+  workflow_dispatch:
+env:
+  Bucket_path: s3://saibucket0100/saibucket0100
+
+#Declaring jobs
+jobs:
+  check_date:
+    runs-on: ubuntu-latest
+    name: Check latest commit
+    outputs:
+      should_run: ${{ steps.should_run.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: print latest_commit
+        run: echo ${{ github.sha }}
+
+      - id: should_run
+        continue-on-error: true
+        name: check latest commit is less than a day
+        if: ${{ github.event_name == 'schedule' }}
+        run: test -z $(git rev-list  --after="24 hours"  ${{ github.sha }}) && echo "::set-output name=should_run::false"   
+  
+  continuous-deployment:
+    needs: check_date
+    if: ${{ needs.check_date.outputs.should_run != 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+     # Step 1
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: zip files
+        run: zip -r test.zip . --exclude '.git/*' --exclude '.github/*'
+
+     # Step 2   
+      # - name: Get AWS Creds
+      #   uses: CloudAdmin/awslogin-action@v1
+      #   id: get_aws_creds
+      #   with:
+      #     service_account_username: ${{ secrets.PROD_SVC_ACCT_USERNAME }}
+      #     service_account_password: ${{ secrets.PROD_SVC_ACCT_PASSWORD }}
+      #     aws_account_id: ${{ secrets.PROD_SVC_ACCT_ID }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACC_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SEC_KEY }}
+          #aws-session-token: ${{ steps.get_aws_creds.outputs.awsSessionToken }}
+          aws-region: us-east-2        
+     # Step 3
+      - name: Sync feeds to AWS S3 bucket
+        run: aws s3 sync . ${Bucket_path} --delete --exclude '*' --include 'test.zip'
