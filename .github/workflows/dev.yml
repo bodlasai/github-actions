@@ -1,11 +1,11 @@
 name: CD Pipeline for DCS DB Feeds on PROD
 on:
   workflow_call:
-    secrets:
-      AWS_ACC_KEY:
-        required: true
-      AWS_SEC_KEY:
-        required: true   
+#     secrets:
+#       AWS_ACC_KEY:
+#         required: true
+#       AWS_SEC_KEY:
+#         required: true   
   #workflow_dispatch:
 env:
   Bucket_path: s3://saibucket0100/saibucket0100
