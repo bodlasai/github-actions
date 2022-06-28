@@ -11,6 +11,8 @@ on:
         required: true
       AWS_SEC_KEY:
         required: true
+env:
+  Bucket_path: "s3://${{ inputs.username }}"
         
 jobs:
   reusable_workflow_job:
@@ -18,11 +20,16 @@ jobs:
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
         with:
-         args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
-         AWS_S3_BUCKET: ${{ inputs.username }}   
+         #args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
+         #AWS_S3_BUCKET: ${{ inputs.username }}   
          aws-access-key-id: ${{ secrets.AWS_ACC_KEY }}
          aws-secret-access-key: ${{ secrets.AWS_SEC_KEY }}
          aws-region: 'us-east-2' 
+         
+      - name: Sync feeds to AWS S3 bucket
+        run: aws s3 sync . ${Bucket_path} --delete --exclude '.git*/*'
+         
+         
          #aws-secret-access-key
 #         with:
 #           username: ${{ inputs.username }}   
