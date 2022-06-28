@@ -22,7 +22,7 @@ jobs:
          AWS_S3_BUCKET: ${{ inputs.username }}   
          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACC_KEY }}
          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SEC_KEY }}
-         AWS_REGION: 'us-east-2' 
+         aws-region: 'us-east-2' 
          
 #         with:
 #           username: ${{ inputs.username }}   
