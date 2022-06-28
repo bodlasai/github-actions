@@ -6,6 +6,11 @@ on:
       username:
         required: true
         type: string
+    secrets:
+      AWS_ACC_KEY1:
+        required: true
+      AWS_SEC_KEY1:
+        required: true
         
 jobs:
   reusable_workflow_job:
@@ -15,8 +20,8 @@ jobs:
         with:
          args: --acl public-read --follow-symlinks --delete --exclude '.git*/*'
          AWS_S3_BUCKET: ${{ inputs.username }}   
-         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACC_KEY }}
-         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SEC_KEY }}
+         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACC_KEY1 }}
+         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SEC_KEY1 }}
 #         with:
 #           username: ${{ inputs.username }}   
 #       - name: print the inputs
