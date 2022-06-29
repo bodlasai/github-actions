@@ -1,11 +1,15 @@
 name: Upload Website
 
 on:
+  workflow_dispatch:
   workflow_call:
     inputs:
       username:
         required: true
         type: string
+      region_name:
+        required: true
+        type: string 
     secrets:
       AWS_ACC_KEY:
         required: true
@@ -13,6 +17,7 @@ on:
         required: true
 env:
   Bucket_path: "s3://${{ inputs.username }}"
+  region_name: ${{ inputs.region_name}}
         
 jobs:
   reusable_workflow_job:
@@ -24,7 +29,7 @@ jobs:
          #AWS_S3_BUCKET: ${{ inputs.username }}   
          aws-access-key-id: ${{ secrets.AWS_ACC_KEY }}
          aws-secret-access-key: ${{ secrets.AWS_SEC_KEY }}
-         aws-region: 'us-east-2' 
+         aws-region: '${region_name}' 
          
       - name: Sync feeds to AWS S3 bucket
         run: aws s3 sync . ${Bucket_path} --delete --exclude '.git*/*'
