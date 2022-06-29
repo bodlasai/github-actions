@@ -19,6 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: development
     steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: zip files
+      run:  zip -r test.zip . --exclude '.git/*' --exclude '.github/*'
+      
     - uses: actions/checkout@master
     - uses: jakejarvis/s3-sync-action@master
       with:
@@ -29,4 +34,5 @@ jobs:
       # AWS_S3_BUCKET: ${{ secrets.username }}
        AWS_S3_BUCKET: ${{ inputs.username }}
        AWS_REGION: 'us-east-2'   # optional: defaults to us-east-1
-      
+    - name: Sync feeds to AWS S3 bucket
+      run: aws s3 sync . ${{ inputs.username }} --delete --exclude '*' --include 'test.zip'  
