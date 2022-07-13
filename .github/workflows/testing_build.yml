@@ -2,10 +2,10 @@ name: Build reusable sonarqube
 on:
   workflow_call:
   workflow_dispatch:
-    secrets:
+    inputs:
       AWS_ACC_KEY:
         required: true
-      AWS_ACC_KEY:
+      AWS_SEC_KEY:
         required: true
 jobs:
   build:
