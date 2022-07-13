@@ -1,0 +1,18 @@
+name: Build reusable sonarqube
+on:
+  workflow_call:
+  workflow_dispatch:
+    secrets:
+      AWS_ACC_KEY:
+        required: true
+      AWS_ACC_KEY:
+        required: true
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo the sting
+        run: echo "hello git actions"
+      - name: run multiple commands
+        run: echo "123"
