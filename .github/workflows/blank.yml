@@ -13,6 +13,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   workflow_call:
+    inputs:
+      username:
+        required: true
+        type: string
     secrets:
       AWS_ACC_KEY:
         required: true
@@ -33,7 +37,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: echo Hello, world! "${{ inputs.username }}"
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
